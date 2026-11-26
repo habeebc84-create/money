@@ -1,0 +1,135 @@
+/* Kaasu design tokens — "passbook" world: warm ledger paper, ink green, marigold. */
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+  --bg: #f3efe4;
+  --paper: #fffcf4;
+  --paper-2: #f8f3e6;
+  --ink: #14211b;
+  --ink-2: #3c4a43;
+  --muted: #5b675f;
+  --rule: #d9d1bd;
+  --rule-strong: #b9ae93;
+  --accent: #e8a33a;        /* marigold fill */
+  --accent-ink: #8a5200;    /* marigold as text on paper (≥4.5:1) */
+  --on-accent: #1d1305;
+  --brand: #1e5b43;         /* ink green fill */
+  --on-brand: #fbf7ec;
+  --income: #17704a;
+  --danger: #a8281e;
+  --danger-soft: #f7e1dc;
+  --warn: #8a5a00;
+  --warn-soft: #f6ead0;
+  --ok-soft: #dcefe3;
+  --focus: #1e5b43;
+  --slip: #14211b;
+  --slip-ink: #fbf7ec;
+  --shadow: 0 1px 0 rgb(20 33 27 / 0.04), 0 10px 30px -18px rgb(20 33 27 / 0.35);
+  --cat-0: #c2410c; --cat-1: #2f7a4f; --cat-2: #1e4f8a; --cat-3: #a16207;
+  --cat-4: #7c3a5a; --cat-5: #0f766e; --cat-6: #6b5b3e; --cat-7: #b4535c;
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-figures: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c1410;
+  --paper: #131d18;
+  --paper-2: #18241e;
+  --ink: #ede8da;
+  --ink-2: #cfd2c6;
+  --muted: #a1aca4;
+  --rule: #2a3831;
+  --rule-strong: #3d4d44;
+  --accent: #f2b54a;
+  --accent-ink: #f5c46d;
+  --on-accent: #1d1305;
+  --brand: #7fd1a8;
+  --on-brand: #0b1510;
+  --income: #6fdba3;
+  --danger: #ff9486;
+  --danger-soft: #3a1a17;
+  --warn: #f5c46d;
+  --warn-soft: #33270f;
+  --ok-soft: #15301f;
+  --focus: #f2b54a;
+  --slip: #1d2a23;
+  --slip-ink: #fbf7ec;
+  --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 34px -20px rgb(0 0 0 / 0.8);
+  --cat-0: #ff9a6b; --cat-1: #6fdba3; --cat-2: #86b4ff; --cat-3: #f2c14e;
+  --cat-4: #e59ac0; --cat-5: #5fd4c8; --cat-6: #cdb98f; --cat-7: #ff9aa2;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-income: var(--income);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-ok-soft: var(--ok-soft);
+  --color-slip: var(--slip);
+  --color-slip-ink: var(--slip-ink);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-figures);
+  --ease-out: var(--ease-out);
+}
+
+@layer base {
+html, body { overflow-x: clip; }
+html { background: var(--bg); -webkit-tap-highlight-color: transparent; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01";
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+::selection { background: var(--accent); color: var(--on-accent); }
+* { caret-color: var(--brand); }
+:focus-visible { outline: 2.5px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.02em; }
+.figures { font-family: var(--font-figures); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+input, select, textarea, button { font: inherit; color: inherit; }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: var(--date-icon-filter, none); }
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.85); }
+
+}
+
+/* Torn receipt edge: the signature of the dashboard's "left this month" slip. */
+.perforated { --hole: 7px; mask: radial-gradient(circle var(--hole) at 50% 100%, #0000 98%, #000) 50% 100% / 18px 100% repeat-x; padding-bottom: calc(var(--hole) + 14px); }
+
+/* Passbook rows: dotted leader between particulars and amount. */
+.leader { flex: 1 1 auto; min-width: 1rem; border-bottom: 1.5px dotted var(--rule-strong); transform: translateY(-0.3em); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 10px; border: 2px solid var(--bg); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheet-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 640px) {
+  @keyframes sheet-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 16px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
+}
