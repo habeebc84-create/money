@@ -12,7 +12,7 @@ Offline, on-device expense tracker in rupees. Next.js 16 static export, no backe
 
 ## Free hosting (no card), you choose one
 - Cloudflare Pages: Create project > Connect to Git > pick the repo. Framework preset: Next.js (Static HTML Export). Build command `npm run build`, output directory `out`. `public/_headers` sets the security headers.
-- Vercel Hobby (non-commercial): Import the repo with the Next.js preset. `vercel.json` pins the framework and security headers; leave **Output Directory** unset (the default). Vercel detects `output: "export"` and publishes `out/` itself. If an imported project was saved with Output Directory `out`, reset it in Project Settings → Build and Deployment: with the Next.js preset that override makes Vercel look for `.next/routes-manifest.json` in the static export folder.
+- Vercel Hobby (non-commercial): Import the repo with the Next.js preset. `vercel.json` pins the framework and security headers; leave **Output Directory** unset, or set it explicitly to `.next` (Next.js's `distDir`) — never to `out`. Vercel detects `output: "export"` and publishes `out/` itself. If an import saved Output Directory as `out`, change it in Project Settings → Build and Deployment: with the Next.js preset, `out` makes Vercel look for `.next/routes-manifest.json` inside the static export folder.
 
 ## Data
 Stored in this browser's localStorage (`kaasu:data:v1`). Not synced. Clearing browser data deletes it: use Settings > Save full backup.
